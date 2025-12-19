@@ -74,6 +74,8 @@ public class ResaleShop {
         }
     }
 
+    
+
     public static void main(String[] args) {
         ResaleShop myShop = new ResaleShop(); 
         myShop.printInventory();

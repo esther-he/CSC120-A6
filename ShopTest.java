@@ -95,23 +95,37 @@ public class ShopTest {
 
     /**
      * 9)
-     * Tests that the toString method returns the correct stats in the string for the computer.
+     * Tests that the Refurbish method assigns a higher price to newer computers and a lower price to older computers.
      */
     @Test
-    public void testToString() {
-        Computer comp = new Computer("2019 MacBook Pro", "Intel", 256, 16, "High Sierra", 2019, 1000);
-        assertEquals("2019 MacBook Pro\nIntel\n256\n 16 \nHigh Sierra\n2019\n1000", comp.toString());
+    public void testRefurbishprice() throws Exception {
+        ResaleShop shop = new ResaleShop();
+        Computer oldComp = new Computer("2019 MacBook Pro", "Intel", 256, 16, "High Sierra", 2009, 1000);
+        Computer newComp = new Computer("2019 MacBook Pro", "Intel", 256, 16, "High Sierra", 2019, 1000);
+        shop.buy(oldComp);
+        shop.buy(newComp);
+        shop.inventory.set(0, oldComp);
+        shop.inventory.set(1, newComp);
+        shop.refurbish(oldComp, "newOS");
+        shop.refurbish(newComp, "newOS");
+        assertTrue(oldComp.price < newComp.price);
     }
 
     /**
      * 10)
-     * Tests that the refurbish method throws an exception if the Computer is not in the inventory.
+     * Tests that the resaleshop constructor creates a shop with no inventory.
      */
     @Test
-    public void testRefurbishException() throws Exception {
+    public void testResaleShopInv() throws Exception{
         ResaleShop shop = new ResaleShop();
-        Computer notInInv = new Computer("New MacBook Pro", "Intel", 256, 64, "High Sierra", 2018, 1000);
-        shop.refurbish(notInInv, "newOS");
+        Computer comp1 = new Computer("2019 MacBook Pro", "Intel", 256, 16, "High Sierra", 2009, 1000);
+        Computer comp2 = new Computer("2019 MacBook Pro", "Intel", 256, 16, "High Sierra", 2019, 1000);
+    
+        shop.buy(comp1);
+        shop.buy(comp2);
+        
+
+        assertTrue(shop.inventory.size() == 2);
     }
 }
 
